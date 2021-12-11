@@ -15,6 +15,12 @@ class CreateSeasonsTable extends Migration
     {
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('tmdb_id')->unique();
+            $table->foreignId('serie_id')->constrained();
+            $table->string('name');
+            $table->string('season_number');
+            $table->string('slug');
+            $table->string('poster_path');
             $table->timestamps();
         });
     }

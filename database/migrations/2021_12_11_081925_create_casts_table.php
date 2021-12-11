@@ -15,6 +15,10 @@ class CreateCastsTable extends Migration
     {
         Schema::create('casts', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('tmdb_id')->unique();
+            $table->string('name');
+            $table->string('slug');
+            $table->string('poster_path');
             $table->timestamps();
         });
     }
