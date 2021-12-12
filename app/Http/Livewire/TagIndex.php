@@ -3,8 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Models\Tag;
-use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\Component;
 
 class TagIndex extends Component
 {
@@ -12,28 +12,27 @@ class TagIndex extends Component
     public $tagName;
     public $tagId;
 
-    public $tags = [];
+    public $search = '';
+    public $sort = 'asc';
+    public $perPage = 5;
+
 
     public function showCreateModal()
     {
         $this->showTagModal = true;
     }
 
-    public function mount()
-    {
-        $this->tags = Tag::all();
-    }
-
     public function createTag()
     {
         Tag::create([
-            'tag_name' => $this->tagName,
-            'slug' => Str::slug($this->tagName)
-        ]);
+          'tag_name' => $this->tagName,
+          'slug'     => Str::slug($this->tagName)
+      ]);
         $this->reset();
-        $this->tags = Tag::all();
-        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Tag Created Successfully 👌']);
+        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Tag created successfully']);
     }
+
+
 
     public function showEditModal($tagId)
     {
@@ -46,15 +45,14 @@ class TagIndex extends Component
 
     public function updateTag()
     {
-      $tag = Tag::findOrFail($this->tagId);
-      $tag->update([
-          'tag_name' => $this->tagName,
-          'slug' => Str::slug($this->tagName)
-      ]);
-      $this->reset();
-      $this->tags = Tag::all();
-      $this->showTagModal = false;
-      $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Tag Update Successfully 👌']);
+        $tag = Tag::findOrFail($this->tagId);
+        $tag->update([
+            'tag_name' => $this->tagName,
+            'slug'     => Str::slug($this->tagName)
+        ]);
+        $this->reset();
+        $this->showTagModal = false;
+        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Tag updated successfully']);
     }
 
     public function deleteTag($tagId)
@@ -62,8 +60,7 @@ class TagIndex extends Component
         $tag = Tag::findOrFail($tagId);
         $tag->delete();
         $this->reset();
-        $this->tags = Tag::all();
-        $this->dispatchBrowserEvent('banner-message', ['style' => 'danger', 'message' => 'Tag Deleted 🗑️👌']);
+        $this->dispatchBrowserEvent('banner-message', ['style' => 'danger', 'message' => 'Tag deleted successfully']);
     }
 
     public function closeTagModal()
@@ -71,8 +68,15 @@ class TagIndex extends Component
         $this->showTagModal = false;
     }
 
+    public function resetFilters()
+    {
+        $this->reset();
+    }
+
     public function render()
     {
-        return view('livewire.tag-index');
+        return view('livewire.tag-index', [
+            'tags' => Tag::search('tag_name', $this->search)->orderBy('tag_name', $this->sort)->paginate($this->perPage)
+        ]);
     }
 }
