@@ -52,7 +52,7 @@ class SeasonIndex extends Component
                     'poster_path'  => $newSeason['poster_path'] ? $newSeason['poster_path'] : $this->serie->poster_path
                 ]);
                 $this->reset('seasonNumber');
-                $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Season created']);
+                $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Season created 👌']);
 
         } else {
             $this->dispatchBrowserEvent('banner-message', ['style' => 'danger', 'message' => 'Api not exists']);
