@@ -80,10 +80,15 @@ class GenreIndex extends Component
         $this->reset();
     }
 
+    public function resetFilters()
+    {
+        $this->reset(['search', 'sort', 'perPage']);
+    }
+
     public function render()
     {
         return view('livewire.genre-index', [
-            'genres' => Genre::paginate(5)
+            'genres' => Genre::search('title', $this->search)->orderBy('title', $this->sort)->paginate($this->perPage)
         ]);
     }
 }
