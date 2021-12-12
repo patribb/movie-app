@@ -26,30 +26,31 @@
                 </svg>
               </div>
 
-              <input type="text" placeholder="Search by listing, location, bedroom number..." class="px-8 py-3 w-full md:w-2/6 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" />
+              <input wire:model="search" placeholder='Search by Name' class="px-8 py-3 w-full md:w-2/6 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" />
             </div>
 
             <div class="flex items-center justify-between mt-4">
               <p class="font-medium">Filters</p>
 
-              <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md">Reset Filter</button>
+              <button wire:click="resetFilters" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md">Reset Filter</button>
             </div>
 
             <div>
-              <div class="flex justify-between space-x-4 mt-4">
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
-                  <option value="">All Type</option>
-                  <option value="for-rent">For Rent</option>
-                  <option value="for-sale">For Sale</option>
-                </select>
+                <div class="flex justify-between space-x-4 mt-4">
+                    <select wire:model="sort"
+                        class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                        <option value="asc">Asc</option>
+                        <option value="desc">Desc</option>
+                    </select>
 
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
-                  <option value="">Furnish Type</option>
-                  <option value="fully-furnished">Fully Furnished</option>
-                  <option value="partially-furnished">Partially Furnished</option>
-                  <option value="not-furnished">Not Furnished</option>
-                </select>
-              </div>
+                    <select wire:model="perPage"
+                        class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                        <option value="5">5 Per Page</option>
+                        <option value="10">10 Per Page</option>
+                        <option value="15">15 Per Page</option>
+                    </select>
+                </div>
+            </div>
             </div>
           </div>
       <div class="w-full overflow-x-auto">

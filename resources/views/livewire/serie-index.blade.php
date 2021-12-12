@@ -77,7 +77,7 @@
                             </td>
                             <td class="px-4 py-3 text-ms font-semibold border">{{ $serie->slug }}</td>
                             <td class="px-4 py-3 text-xs border">
-                                <img class='w-12 h-12 rounded-full' src="https://www.themoviedb.org/tv/{{$serie->poster_path}}" alt="">
+                                <img class='w-12 h-12 rounded-full' src="https://www.themoviedb.org/t/p/original/{{$serie->poster_path}}" alt="">
                               </td>
 
                             <td class="px-4 py-3 text-sm border">
