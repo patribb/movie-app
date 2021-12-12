@@ -39,14 +39,58 @@
                   {{$cast->poster_path}}
                 </td>
                 <td class="px-4 py-3 text-sm border">
-                    Edit \ Delete
+                    <x-m-button wire:click="showEditModal({{ $cast->id }})"
+                        class='bg-green-500 hover:bg-gray-700 text-white'>Edit</x-m-button>
+                    <x-m-button wire:click="deleteCast({{$cast->id}})" class='bg-red-500 hover:bg-red-700 text-white'>Delete</x-m-button>
                 </td>
               </tr>
               @endforeach
           </tbody>
-          {{$casts->links()}}
         </table>
+        <div class="m-2 p-2">
+            {{$casts->links()}}
+        </div>
       </div>
     </div>
+    <x-jet-dialog-modal wire:model="showCastModal">
+            <x-slot name='title'>Updte Cast</x-slot>
+        <x-slot name='content'>
+            <div class="mt-10 sm:mt-0">
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                    <form>
+                        <div class="shadow overflow-hidden sm:rounded-md">
+                            <div class="px-4 py-5 bg-white sm:p-6">
+                                <div class="grid grid-cols-6 gap-6">
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label for="first-name" class="block text-sm font-medium text-gray-700">Cast
+                                            Name</label>
+                                        <input wire:model="castName" type="text" autocomplete="given-name"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                            @error('castName')
+                                                <span class="text-red-500 text-sm">{{$message}}</span>
+                                            @enderror
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <label for="first-name" class="block text-sm font-medium text-gray-700">Cast
+                                            Poster</label>
+                                        <input wire:model="castPosterPath" type="text" autocomplete="given-name"
+                                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                            @error('castPosterPath')
+                                            <span class="text-red-500 text-sm">{{$message}}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </x-slot>
+        <x-slot name='footer'>
+            <x-m-button wire:click="closeCastModal" class='bg-gray-500 hover:bg-gray-800 text-white'>Cancel</x-m-button>
+            <x-m-button wire:click="updateCast">Update</x-m-button>
+        </x-slot>
+    </x-jet-dialog-modal>
   </section>
 

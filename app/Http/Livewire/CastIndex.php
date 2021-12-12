@@ -15,6 +15,14 @@ class CastIndex extends Component
     public $castTMDBId;
     public $castName;
     public $castPosterPath;
+    public $castId;
+
+    public $showCastModal = false;
+
+    protected $rules = [
+      'castName' => 'required',
+      'castPosterPath' => 'required'
+    ];
 
     public function generateCast()
     {
@@ -30,6 +38,45 @@ class CastIndex extends Component
         } else {
             $this->dispatchBrowserEvent('banner-message', ['style' => 'danger', 'message' => 'Cast already exist']);
         }
+    }
+
+    public function showEditModal($id)
+    {
+        $this->castId = $id;
+        $this->loadCast();
+        $this->showCastModal = true;
+    }
+
+    public function loadCast()
+    {
+        $cast = Cast::findOrFail($this->castId);
+        $this->castName = $cast->name;
+        $this->castPosterPath = $cast->poster_path;
+    }
+
+    public function updateCast()
+    {
+        $this->validate();
+        $cast = Cast::findOrFail($this->castId);
+        $cast->update([
+            'name' => $this->castName,
+            'poster_path' => $this->castPosterPath
+        ]);
+        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Cast update succesfully 👌']);
+        $this->reset();
+    }
+
+    public function closeCastModal()
+    {
+        $this->reset();
+        $this->resetValidation();
+    }
+
+    public function deleteCast($id)
+    {
+        Cast::findOrFail($id)->delete();
+        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Cast delete succesfully 👌']);
+        $this->reset();
     }
 
     public function render()
