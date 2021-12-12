@@ -28,7 +28,9 @@ class GenreIndex extends Component
 
     public function generateGenre()
     {
-        $newGenre = Http::get('https://api.themoviedb.org/3/genre/'. $this->tmdbId .'?api_key=7d7701ad90bc3d4378fbb7bcff41addb&language=es-EU')->json();
+        $newGenre = Http::get('https://api.themoviedb.org/3/genre/'. $this->tmdbId .'?api_key=7d7701ad90bc3d4378fbb7bcff41addb&language=es-EU
+                        ')->json();
+
         $genre = Genre::where('tmdb_id', $newGenre['id'])->first();
         if (!$genre) {
             Genre::create([
@@ -37,9 +39,9 @@ class GenreIndex extends Component
         'slug'    => Str::slug($newGenre['name']),
     ]);
             $this->reset();
-            $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Genre created 👌']);
+            $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Genre created']);
         } else {
-            $this->dispatchBrowserEvent('banner-message', ['style' => 'danger', 'message' => 'Genre already exisit']);
+            $this->dispatchBrowserEvent('banner-message', ['style' => 'danger', 'message' => 'Genre exisit']);
         }
     }
 
@@ -63,7 +65,7 @@ class GenreIndex extends Component
         $genre->update([
             'title' => $this->title,
         ]);
-        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Genre updated 👌']);
+        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Genre updated']);
         $this->reset();
     }
 
@@ -76,7 +78,7 @@ class GenreIndex extends Component
     public function deleteGenre($id)
     {
         Genre::findOrFail($id)->delete();
-        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Genre deleted 👌']);
+        $this->dispatchBrowserEvent('banner-message', ['style' => 'success', 'message' => 'Genre deleted']);
         $this->reset();
     }
 
@@ -84,7 +86,6 @@ class GenreIndex extends Component
     {
         $this->reset(['search', 'sort', 'perPage']);
     }
-
     public function render()
     {
         return view('livewire.genre-index', [
