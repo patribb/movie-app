@@ -21,7 +21,9 @@
 </head>
 
 <body>
+    <x-navbar />
     {{ $slot }}
+    <x-footer />
     @stack('modals')
     @livewireScripts
 </body>
