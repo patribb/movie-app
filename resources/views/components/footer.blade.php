@@ -1,4 +1,4 @@
-<footer class="text-gray-600 dark:text-gray-200 dark:bg-gray-800 body-font">
+<footer class="mt-4 text-gray-600 dark:text-gray-200 dark:bg-gray-800 body-font">
     <div class="container flex flex-col items-center px-5 py-8 mx-auto sm:flex-row">
       <a class="flex items-center justify-center font-medium text-gray-900 dark:text-gray-500 title-font md:justify-start">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 p-2 text-white bg-indigo-500 rounded-full" viewBox="0 0 24 24">
